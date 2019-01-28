@@ -1,1 +1,1 @@
-# ProductManager-Django
+# ProductFilter-Django
