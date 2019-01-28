@@ -1,0 +1,296 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3 class="center-align red lighten-3">{{title}}</h3>
+
+<div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Filter
+  </button>
+    <div class="dropdown-menu">
+	  <form class="px-4 py-3" method="POST" action="">
+	  	{% csrf_token %}
+	  	<div class="form-group">
+	    	<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="minPrice">Min. Price</label>
+			  </div>
+			  <select class="custom-select" name="minPrice" id="minPrice">
+			    <option {% if minPrice == 0 %} selected {% endif %} value="0">Any</option>
+			    <option {% if minPrice == 1000 %} selected {% endif %} value="1000">1000</option>
+			    <option {% if minPrice == 2000 %} selected {% endif %} value="2000">2000</option>
+			    <option {% if minPrice == 4000 %} selected {% endif %} value="4000">4000</option>
+			    <option {% if minPrice == 6000 %} selected {% endif %} value="6000">6000</option>
+			    <option {% if minPrice == 10000 %} selected {% endif %} value="10000">10000</option>
+			    <option {% if minPrice == 20000 %} selected {% endif %} value="20000">20000</option>
+			  </select>
+			</div>
+	    </div>
+
+	    <div class="form-group">
+	    	<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="maxPrice">Max. Price</label>
+			  </div>
+			  <select class="custom-select" name="maxPrice" id="maxPrice">
+			    <option {% if maxPrice == 0 %} selected {% endif %} value="0">Any</option>
+			    <option {% if maxPrice == 20000 %} selected {% endif %} value="20000">20000</option>
+			    <option {% if maxPrice == 10000 %} selected {% endif %} value="10000">10000</option>
+			    <option {% if maxPrice == 6000 %} selected {% endif %} value="6000">6000</option>
+			    <option {% if maxPrice == 4000 %} selected {% endif %} value="4000">4000</option>
+			    <option {% if maxPrice == 2000 %} selected {% endif %} value="2000">2000</option>
+			    <option {% if maxPrice == 1000 %} selected {% endif %} value="1000">1000</option>
+			  </select>
+			</div>
+	    </div>
+
+	    <div class="form-group">
+	    	<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="selectProcessor">Processor</label>
+			  </div>
+			  <select class="custom-select" name="selectProcessor" id="selectProcessor">
+			    <option {% if selectedProcessor == 'any' %} selected {% endif %} value="any">Any</option>
+			    <option {% if selectedProcessor == 'DualCore' %} selected {% endif %} value="DualCore">DualCore</option>
+			    <option {% if selectedProcessor == 'QuadCore' %} selected {% endif %} value="QuadCore">QuadCore</option>
+			    <option {% if selectedProcessor == 'OctaCore' %} selected {% endif %} value="OctaCore">OctaCore</option>
+			  </select>
+			  </select>
+			</div>
+	    </div>
+
+	    <div class="form-group">
+	      	<div class="input-group mb-3">
+			  <div class="input-group-prepend">
+			    <label class="input-group-text" for="selectOS">OS</label>
+			  </div>
+			  <select class="custom-select" name="selectOS" id="selectOS">
+			    <option {% if selectedOS == 'any' %} selected {% endif %} value="any">Any</option>
+			    <option {% if selectedOS == 'Kitkat' %} selected {% endif %} value="Kitkat">Kitkat</option>
+			    <option {% if selectedOS == 'Lolly Pop' %} selected {% endif %} value="Lolly Pop">Lolly Pop</option>
+			    <option {% if selectedOS == 'Naugat' %} selected {% endif %} value="Naugat">Naugat</option>
+			    <option {% if selectedOS == 'Orio' %} selected {% endif %} value="Orio">Orio</option>
+			  </select>
+			</div>
+	    </div>
+	    <button type="submit" class="btn btn-primary" name="aFilter" id="aFilter" value="aFilter">Apply Filter</button>
+	    <button type="submit" class="btn btn-light" name="cFilter" id="cFilter" value="cFilter">Clear Filter</button>
+	  </form>
+	  <div class="dropdown-divider"></div>
+	</div>
+</div>
+
+<ul class="collection">
+
+
+		<li class="collection-item">
+		{% if pFilter %}
+			{% for product in products %}
+				{% if product.pPrice <= maxPrice and product.pPrice >= minPrice and product.pProcessor == selectedProcessor and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+
+				{% elif product.pPrice <= maxPrice and product.pPrice >= minPrice and product.pProcessor == selectedProcessor and selectedOS == "any" %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice <= maxPrice and product.pPrice >= minPrice and selectedProcessor == "any" and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice <= maxPrice and minPrice == 0 and product.pProcessor == selectedProcessor and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+
+				{% elif product.pPrice >= minPrice and maxPrice == 0 and product.pProcessor == selectedProcessor and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+
+				{% elif product.pPrice >= minPrice and maxPrice == 0 and product.pProcessor == selectedProcessor and selectedOS == "any" %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice >= minPrice and maxPrice == 0 and selectedProcessor == "any" and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pProcessor == selectedProcessor and product.pOS == selectedOS and minPrice == 0 and maxPrice == 0 %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice <= maxPrice and product.pPrice >= minPrice and selectedProcessor == "any" and selectedOS == "any" %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice <= maxPrice and minPrice == 0 and selectedOS == "any" and product.pProcessor == selectedProcessor %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice <= maxPrice and minPrice == 0 and selectedProcessor == "any" and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+
+				{% elif product.pPrice >= minPrice and maxPrice == 0 and selectedProcessor == "any" and selectedOS == "any" %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif product.pPrice <= maxPrice and minPrice == 0 and selectedProcessor == "any" and selectedOS == "any" %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif minPrice == 0 and maxPrice == 0 and selectedOS == "any" and product.pProcessor == selectedProcessor %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% elif minPrice == 0 and maxPrice == 0 and selectedProcessor == "any" and product.pOS == selectedOS %}
+					<div class="card text-center">
+			  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+			  			<div class="card-body">
+			    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+			    			<p class="card-text">Brand: {{product.pBrand}}</p>
+			    			<p class="card-text">OS: {{product.pOS}}</p>
+			    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+			    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+			   				<a href="#" class="btn btn-primary">Buy</a>
+			  			</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			{% for product in products %}
+				<div class="card text-center">
+		  			<h5 class="card-header"><a href="/posts/details/{{post.id}}">{{product.pTitle}}</a></h5>
+		  			<div class="card-body">
+		    			<h5 class="card-title">Model: {{product.pModel}}</h5>
+		    			<p class="card-text">Brand: {{product.pBrand}}</p>
+		    			<p class="card-text">OS: {{product.pOS}}</p>
+		    			<p class="card-text">Processor: {{product.pProcessor}}</p>
+		    			<p class="card-text">Price: {{product.pPrice}} INR</p>
+		   				<a href="#" class="btn btn-primary">Buy</a>
+		  			</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+		</li>
+		</div>
+			
+</ul>
+
+{% endblock %}
