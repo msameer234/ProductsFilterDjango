@@ -4,7 +4,7 @@ This app contains single web page.
 The webpage contans a list of few Smartphones.
 You can apply filter to this List.
 
-####==>> Hosted at: msameer234.pythonanywhere.com
+#### ==>> Hosted at: www.msameer234.pythonanywhere.com
 
 ## Filtering Parameters Used:
 --> Minimum Price.
@@ -15,8 +15,13 @@ You can apply filter to this List.
 ## Usage:
  [*] insall python, create virtual env and use the same, and then inslall django. Now use the following commands:
  
+<<<<<<< HEAD
  1. git clone https://github.com/msameer234/ProductFilter-Django.git
  2. cd ProductsFilterDjango
+=======
+ 1. git clone https://github.com/msameer234/ProductsFilterDjango.git
+ 2. cd ProductFilter-Django
+>>>>>>> 07bc2aeeca73ac6f42e718bd10508d2c2c48da11
  3. python manage.py makemigrations
  4. python manage.py migrate
  5. python manage.py runserver
