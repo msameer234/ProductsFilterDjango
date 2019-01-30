@@ -18,10 +18,8 @@ You can apply filter to this List.
 <<<<<<< HEAD
  1. git clone https://github.com/msameer234/ProductFilter-Django.git
  2. cd ProductsFilterDjango
-=======
  1. git clone https://github.com/msameer234/ProductsFilterDjango.git
  2. cd ProductFilter-Django
->>>>>>> 07bc2aeeca73ac6f42e718bd10508d2c2c48da11
  3. python manage.py makemigrations
  4. python manage.py migrate
  5. python manage.py runserver
