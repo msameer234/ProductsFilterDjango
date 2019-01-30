@@ -16,7 +16,7 @@ You can apply filter to this List.
  [*] insall python, create virtual env and use the same, and then inslall django. Now use the following commands:
  
  1. git clone https://github.com/msameer234/ProductFilter-Django.git
- 2. cd ProductFilter-Django
+ 2. cd ProductsFilterDjango
  3. python manage.py makemigrations
  4. python manage.py migrate
  5. python manage.py runserver
