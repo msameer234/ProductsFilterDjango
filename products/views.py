@@ -4,6 +4,8 @@ from .models import Products
 
 from django.contrib.auth.models import User
 # Create your views here.
+
+
 def products(request):
 	superusers = User.objects.filter(is_superuser=True)
 	print(superusers)
@@ -14,6 +16,31 @@ def products(request):
 	minPrice = 0
 	maxPrice = 0
 
+	processors = []
+	OSs = []
+
+	for product in products:
+		add_processor = True
+		processor_available = product.pProcessor
+		for processor_already in processors:
+			if processor_available == processor_already:
+				add_processor = False
+		if add_processor:
+			processors.append(processor_available)
+
+
+		add_OS = True
+		OS_available = product.pOS
+		for OS_already in OSs:
+			if OS_available == OS_already:
+				add_OS = False
+		if add_OS:
+			OSs.append(OS_available)
+
+	print(OSs)
+	print(processors)
+
+	
 	# a = product.pPrice <= maxPrice
 	# b = product.pPrice >= minPrice
 	# c = product.pProcessor == selectedProcessor
@@ -46,7 +73,9 @@ def products(request):
 		'selectedProcessor':selectedProcessor,
 		'minPrice':int(minPrice),
 		'maxPrice':int(maxPrice),
-		'pFilter':pFilter
+		'pFilter':pFilter,
+		'processors':processors,
+		'OSs':OSs
 	}
 	return render(request, 'products.html', context)
 

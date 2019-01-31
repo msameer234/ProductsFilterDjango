@@ -51,12 +51,17 @@
 			    <label class="input-group-text" for="selectProcessor">Processor</label>
 			  </div>
 			  <select class="custom-select" name="selectProcessor" id="selectProcessor">
+				  <option value="any">Any</option>
+				  {% for processor in processors %}
+				  <option {% if selectedProcessor == '{{processor}}' %} selected {% endif %} value={{processor}}>{{processor}}</option>
+				  {% endfor %}
+			  </select>
+			  <!-- 
 			    <option {% if selectedProcessor == 'any' %} selected {% endif %} value="any">Any</option>
 			    <option {% if selectedProcessor == 'DualCore' %} selected {% endif %} value="DualCore">DualCore</option>
 			    <option {% if selectedProcessor == 'QuadCore' %} selected {% endif %} value="QuadCore">QuadCore</option>
 			    <option {% if selectedProcessor == 'OctaCore' %} selected {% endif %} value="OctaCore">OctaCore</option>
-			  </select>
-			  </select>
+			   -->
 			</div>
 	    </div>
 
@@ -67,10 +72,14 @@
 			  </div>
 			  <select class="custom-select" name="selectOS" id="selectOS">
 			    <option {% if selectedOS == 'any' %} selected {% endif %} value="any">Any</option>
+			    {% for os in OSs %}
+			   	<option {% if selectedOS == '{{os}}' %} selected {% endif %} value="{{os}}">{{os}}</option>			    
+			    {% endfor %}
+			    <!-- <option {% if selectedOS == 'any' %} selected {% endif %} value="any">Any</option>			    
 			    <option {% if selectedOS == 'Kitkat' %} selected {% endif %} value="Kitkat">Kitkat</option>
 			    <option {% if selectedOS == 'Lolly Pop' %} selected {% endif %} value="Lolly Pop">Lolly Pop</option>
 			    <option {% if selectedOS == 'Naugat' %} selected {% endif %} value="Naugat">Naugat</option>
-			    <option {% if selectedOS == 'Orio' %} selected {% endif %} value="Orio">Orio</option>
+			    <option {% if selectedOS == 'Orio' %} selected {% endif %} value="Orio">Orio</option> -->
 			  </select>
 			</div>
 	    </div>
