@@ -51,10 +51,10 @@
 			    <label class="input-group-text" for="selectProcessor">Processor</label>
 			  </div>
 			  <select class="custom-select" name="selectProcessor" id="selectProcessor">
-				  <option value="any">Any</option>
-				  {% for processor in processors %}
-				  <option {% if selectedProcessor == '{{processor}}' %} selected {% endif %} value={{processor}}>{{processor}}</option>
-				  {% endfor %}
+			    <option {% if selectedProcessor == 'any' %} selected {% endif %} value="any">Any</option>
+				{% for processor in processors %}
+				<option {% if selectedProcessor == '{{processor}}' %} selected {% endif %} value={{processor}}>{{processor}}</option>
+				{% endfor %}
 			  </select>
 			  <!-- 
 			    <option {% if selectedProcessor == 'any' %} selected {% endif %} value="any">Any</option>
