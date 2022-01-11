@@ -4,7 +4,7 @@ This app contains single web page.
 The webpage contans a list of few Smartphones.
 You can apply filter to this List.
 
-#### ==>> Hosted at: www.msameer234.pythonanywhere.com
+#### ==>> Hosted at: www.msameer234.eu.pythonanywhere.com
 
 ## Filtering Parameters Used:
 --> Minimum Price.
